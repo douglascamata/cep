@@ -17,7 +17,7 @@ defmodule CepTest do
   end
 
   test "should be able to inform the list of available sources" do
-    sources = Cep.sources
+    sources = Cep.all_sources
     assert sources == [:correios, :viacep, :postmon]
   end
 

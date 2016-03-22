@@ -1,10 +1,12 @@
 # Cep
 
+[![Build Status](https://travis-ci.org/douglascamata/cep.svg?branch=master)](https://travis-ci.org/douglascamata/cep)
+
 A package to query Brazilian CEP codes.
 
 Has support for multiple source APIs (Correios, ViaCep, Postmon, etc).
 It can query one specific source or query until one source returns a valid
-result.
+result. It has a pool of clients managed by [poolboy](https://github.com/devinus/poolboy).
 
 ## Installation
 
@@ -19,7 +21,7 @@ def deps do
 end
 ```
 
-2. Ensure cep is started before your application:
+2. Ensure cep is started before your application (this is an otp app!):
 
 ```elixir
 def application do
@@ -64,12 +66,36 @@ the desired source:
 Cep.get_address("28016-811", source: :viacep)
 ```
 
+## Configuration
+
+### Pool size and overflow
+
+If you want to change the default pool size and/or overflow set add to our
+`Mix.Config` file:
+
+```elixir
+config :cep, pool: [size: 10, overflow: 15]
+```
+
+### Sources
+
+You can change the default sources used when no `source` or `sources` keywords
+are sent to `Cep.get_address` by modifying your config file like this:
+
+```elixir
+config :cep, sources: [:correios, :viacep]
+```
+
+**IMPORTANT**: even if you add the default sources in config file, the `source`
+and `sources` keywords can override this configuration. 
+
 ## Future
 
 Future features that are planned:
 
-1. Cep queries cache using `ets`
+1. Cache Cep queries using `ets`
 2. Add even more sources
 3. Add policies to order the source list based on different criteria (average
   response time, for example)
-4. Use an Agent to store the default source list
+4. Use an Agent to store the default source list and allow it to be changed on
+  the fly, as necessary

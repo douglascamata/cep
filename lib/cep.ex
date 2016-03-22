@@ -5,8 +5,8 @@ defmodule Cep do
     Cep.Supervisor.start_link
   end
 
-  def sources do
-    Cep.Client.sources
+  def all_sources do
+    Cep.Client.all_sources
   end
 
   def get_address(cep, options \\ []) do

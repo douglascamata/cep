@@ -6,7 +6,6 @@ defmodule CepClientTest do
 
   setup_all do
     ExVCR.Config.cassette_library_dir("fixture/vcr_cassettes")
-    GenServer.start_link(Cep.Client, [])
     :ok
   end
 
@@ -97,6 +96,22 @@ defmodule CepClientTest do
         :infinity
       )
       assert status == :not_found
+    end
+  end
+
+  test "should consider config sources when there is no source(s) keyword arg" do
+    use_cassette "venda nova do imigrante - correios" do
+      with_mock Application, [:passthrough], [] do
+        :poolboy.transaction(
+         :cep_client,
+         fn(server) ->
+           GenServer.call(server, {:get_address, "29375-000", []})
+         end,
+         :infinity
+       )
+
+       assert called Application.get_env(:cep, :sources, :_)
+      end
     end
   end
 end

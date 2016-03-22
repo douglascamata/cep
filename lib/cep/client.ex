@@ -19,14 +19,20 @@ defmodule Cep.Client do
   end
 
   defp process_sources(options) do
-    default_sources = [:correios, :viacep, :postmon]
-
     source = Keyword.get(options, :source, nil)
     if source do
       [source]
     else
-      Keyword.get(options, :sources, default_sources)
+      Keyword.get(options, :sources, used_sources)
     end
+  end
+
+  def used_sources do
+    Application.get_env(:cep, :sources, all_sources)
+  end
+
+  def all_sources do
+    Keyword.keys(sources_clients_map)
   end
 
   defp get_address_from_multiple_sources(_, []) do
@@ -42,10 +48,6 @@ defmodule Cep.Client do
       {:not_found, _} ->
         get_address_from_multiple_sources(cep, List.delete(sources, source))
     end
-  end
-
-  def sources do
-    Keyword.keys(sources_clients_map)
   end
 
   defp sources_clients_map do
