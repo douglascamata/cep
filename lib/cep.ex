@@ -21,12 +21,4 @@ defmodule Cep do
       :poolboy.checkin(:cep_client, worker)
     end
   end
-
-  def test do
-    Enum.each(1..5, fn(_) ->
-      spawn(
-        fn -> Cep.get_address("00000-000")
-      end)
-    end)
-  end
 end
