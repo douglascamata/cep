@@ -11,13 +11,17 @@ defmodule CepTest do
   test "should get address of a CEP" do
     use_cassette "venda nova do imigrante - correios" do
       {:ok, address} = Cep.get_address("29375-000")
-
       assert address["city"] == "Venda Nova do Imigrante"
     end
   end
 
-  test "should be able to inform the list of available sources" do
+  test "should be able to inform all the sources" do
     sources = Cep.all_sources
+    assert sources == [:correios, :viacep, :postmon]
+  end
+
+  test "should be able to inform the used sources" do
+    sources = Cep.used_sources
     assert sources == [:correios, :viacep, :postmon]
   end
 

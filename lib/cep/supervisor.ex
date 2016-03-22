@@ -12,7 +12,7 @@ defmodule Cep.Supervisor do
 
     poolboy_config = [
       {:name, {:local, :cep_client}},
-      {:worker_module, Cep.Client},
+      {:worker_module, Cep.Worker},
       {:size, pool_size},
       {:max_overflow, pool_overflow}
     ]

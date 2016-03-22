@@ -12,6 +12,8 @@ defmodule Cep.Sources.Correios do
         if cep_not_found?(body) do
           cep_not_found
         end
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        {:error, reason}
     end
   end
 

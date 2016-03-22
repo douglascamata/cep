@@ -1,21 +1,8 @@
 defmodule Cep.Client do
-  use GenServer
-
-  def start_link(state) do
-    GenServer.start_link(__MODULE__, state)
-  end
 
   def get_address(cep, options \\ []) do
-    GenServer.call(__MODULE__, {:get_address, cep, options})
-  end
-
-  def init(state) do
-    {:ok, state}
-  end
-
-  def handle_call({:get_address, cep, options}, _from, state) do
     sources = process_sources(options)
-    {:reply, get_address_from_multiple_sources(cep, sources), state}
+    get_address_from_multiple_sources(cep, sources, error: false, reason: nil)
   end
 
   defp process_sources(options) do
@@ -35,18 +22,34 @@ defmodule Cep.Client do
     Keyword.keys(sources_clients_map)
   end
 
-  defp get_address_from_multiple_sources(_, []) do
+  defp get_address_from_multiple_sources(_, [], [error: false, reason: _]) do
     {:not_found, "CEP not found."}
   end
 
-  defp get_address_from_multiple_sources(cep, sources) do
+  defp get_address_from_multiple_sources(_, [], [error: true, reason: reason]) do
+    {:error, reason}
+  end
+
+  defp get_address_from_multiple_sources(cep, sources, [error: _, reason: _]) do
     source = List.first(sources)
     client = sources_clients_map[source]
     case client.get_address(cep) do
       {:ok, address} ->
         {:ok, address}
       {:not_found, _} ->
-        get_address_from_multiple_sources(cep, List.delete(sources, source))
+        get_address_from_multiple_sources(
+          cep,
+          List.delete(sources, source),
+          error: false,
+          reason: nil
+        )
+      {:error, reason} ->
+        get_address_from_multiple_sources(
+          cep,
+          List.delete(sources, source),
+          error: true,
+          reason: reason
+        )
     end
   end
 

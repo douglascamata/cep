@@ -2,7 +2,7 @@ defmodule Cep.Sources.ViaCep do
   use Cep.Sources.Base
 
   def get_address(cep) do
-    case HTTPoison.get('http://viacep.com.br/ws/#{cep}/json') do
+    case HTTPoison.get("http://viacep.com.br/ws/#{cep}/json") do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, decoded_body} = Poison.decode(body)
         if cep_not_found?(decoded_body) do
@@ -10,6 +10,8 @@ defmodule Cep.Sources.ViaCep do
         else
           {:ok, format_result_json(decoded_body)}
         end
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        {:error, reason}
     end
   end
 

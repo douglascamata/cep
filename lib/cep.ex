@@ -9,6 +9,10 @@ defmodule Cep do
     Cep.Client.all_sources
   end
 
+  def used_sources do
+    Cep.Client.used_sources
+  end
+
   def get_address(cep, options \\ []) do
     worker = :poolboy.checkout(:cep_client, true, :infinity)
     try do

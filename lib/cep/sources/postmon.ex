@@ -8,6 +8,8 @@ defmodule Cep.Sources.Postmon do
         {:ok, format_result_json(decoded_body)}
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         cep_not_found
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        {:error, reason}
     end
   end
 end
