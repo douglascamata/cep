@@ -1,0 +1,25 @@
+[
+  {
+    "request": {
+      "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:cli=\"http://cliente.bean.master.sigep.bsb.correios.com.br/\">\n  <soapenv:Header />\n  <soapenv:Body>\n    <cli:consultaCEP>\n      <cep>29375000</cep>\n    </cli:consultaCEP>\n  </soapenv:Body>\n</soapenv:Envelope>\n",
+      "headers": [],
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente"
+    },
+    "response": {
+      "body": "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body><ns2:consultaCEPResponse xmlns:ns2=\"http://cliente.bean.master.sigep.bsb.correios.com.br/\"><return><bairro></bairro><cep>29375000</cep><cidade>Venda Nova do Imigrante</cidade><complemento></complemento><complemento2></complemento2><end></end><id>0</id><uf>ES</uf></return></ns2:consultaCEPResponse></soap:Body></soap:Envelope>",
+      "headers": {
+        "Date": "Mon, 21 Mar 2016 02:27:38 GMT",
+        "X-OPNET-Transaction-Trace": "a2_5650bf40-a5a2-43ad-8304-318a1b78f6a9",
+        "Content-Type": "text/xml;charset=ISO-8859-1",
+        "Content-Length": "407",
+        "Vary": "Accept-Encoding,User-Agent",
+        "Set-Cookie": "_op_aixPageId=a2_5650bf40-a5a2-43ad-8304-318a1b78f6a9; Path=/"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]

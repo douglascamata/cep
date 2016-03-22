@@ -1,0 +1,31 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": [],
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "http://viacep.com.br/ws/29375-000/json"
+    },
+    "response": {
+      "body": "{\n  \"cep\": \"29375-000\",\n  \"logradouro\": \"\",\n  \"complemento\": \"\",\n  \"bairro\": \"\",\n  \"localidade\": \"Venda Nova do Imigrante\",\n  \"uf\": \"ES\",\n  \"unidade\": \"\",\n  \"ibge\": \"3205069\",\n  \"gia\": \"\"\n}",
+      "headers": {
+        "Server": "nginx/1.8.1",
+        "Date": "Mon, 21 Mar 2016 03:05:46 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Access-Control-Allow-Headers": "Content-Type, X-Request-With, X-Requested-By",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Max-Age": "86400",
+        "Access-Control-Allow-Origin": "*",
+        "Expires": "Mon, 21 Mar 2016 04:05:46 GMT",
+        "Cache-Control": "max-age=3600"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": {
+        "timeout": "30"
+      },
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "http://api.postmon.com.br/v1/cep/00000-000"
+    },
+    "response": {
+      "body": "",
+      "headers": {
+        "Date": "Mon, 21 Mar 2016 02:38:29 GMT",
+        "Content-Type": "application/json",
+        "Content-Length": "0",
+        "Connection": "keep-alive",
+        "Set-Cookie": "__cfduid=dc31febac534c15caadf3eb5ffd1e1c151458527905; expires=Tue, 21-Mar-17 02:38:25 GMT; path=/; domain=.postmon.com.br; HttpOnly",
+        "Access-Control-Allow-Origin": "*",
+        "CF-Cache-Status": "MISS",
+        "Server": "cloudflare-nginx",
+        "CF-RAY": "286e0710d4ab0987-SCL"
+      },
+      "status_code": 404,
+      "type": "ok"
+    }
+  }
+]

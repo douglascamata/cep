@@ -1,0 +1,81 @@
+[
+  {
+    "request": {
+      "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:cli=\"http://cliente.bean.master.sigep.bsb.correios.com.br/\">\n  <soapenv:Header />\n  <soapenv:Body>\n    <cli:consultaCEP>\n      <cep>00000000</cep>\n    </cli:consultaCEP>\n  </soapenv:Body>\n</soapenv:Envelope>\n",
+      "headers": [],
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente"
+    },
+    "response": {
+      "body": "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body><soap:Fault><faultcode>soap:Server</faultcode><faultstring>CEP NAO ENCONTRADO</faultstring><detail><ns2:SigepClienteException xmlns:ns2=\"http://cliente.bean.master.sigep.bsb.correios.com.br/\">CEP NAO ENCONTRADO</ns2:SigepClienteException></detail></soap:Fault></soap:Body></soap:Envelope>",
+      "headers": {
+        "Date": "Mon, 21 Mar 2016 03:14:04 GMT",
+        "Content-Type": "text/xml;charset=ISO-8859-1",
+        "Content-Length": "369",
+        "Vary": "Accept-Encoding,User-Agent",
+        "Connection": "close"
+      },
+      "status_code": 500,
+      "type": "ok"
+    }
+  },
+  {
+    "request": {
+      "body": "",
+      "headers": [],
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "http://viacep.com.br/ws/00000-000/json"
+    },
+    "response": {
+      "body": "{\n  \"erro\": true\n}",
+      "headers": {
+        "Server": "nginx/1.8.1",
+        "Date": "Mon, 21 Mar 2016 03:14:05 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Access-Control-Allow-Headers": "Content-Type, X-Request-With, X-Requested-By",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Max-Age": "86400",
+        "Access-Control-Allow-Origin": "*",
+        "Expires": "Mon, 21 Mar 2016 04:14:05 GMT",
+        "Cache-Control": "max-age=3600"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  },
+  {
+    "request": {
+      "body": "",
+      "headers": {
+        "timeout": "30"
+      },
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "http://api.postmon.com.br/v1/cep/00000-000"
+    },
+    "response": {
+      "body": "",
+      "headers": {
+        "Date": "Mon, 21 Mar 2016 03:14:10 GMT",
+        "Content-Type": "application/json",
+        "Content-Length": "0",
+        "Connection": "keep-alive",
+        "Set-Cookie": "__cfduid=d34c408e42275f1bead3cf7a434af05311458530045; expires=Tue, 21-Mar-17 03:14:05 GMT; path=/; domain=.postmon.com.br; HttpOnly",
+        "Access-Control-Allow-Origin": "*",
+        "CF-Cache-Status": "EXPIRED",
+        "Server": "cloudflare-nginx",
+        "CF-RAY": "286e3b532d210ac0-SCL"
+      },
+      "status_code": 404,
+      "type": "ok"
+    }
+  }
+]
