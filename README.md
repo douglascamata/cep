@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/douglascamata/cep.svg?branch=master)](https://travis-ci.org/douglascamata/cep)
 
-A package to query Brazilian CEP codes.
+A package to query Brazilian zip (CEP) codes.
 
 Has support for multiple source APIs (Correios, ViaCep, Postmon, etc).
 It can query one specific source or query until one source returns a valid
