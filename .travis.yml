@@ -4,3 +4,8 @@ elixir:
   - 1.2.3
 otp_release:
   - 18.2
+script:
+  - mix test --include live
+notifications:
+  recipients:
+    - d.camata@gmail.com

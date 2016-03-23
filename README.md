@@ -6,7 +6,7 @@ A package to query Brazilian CEP codes.
 
 Has support for multiple source APIs (Correios, ViaCep, Postmon, etc).
 It can query one specific source or query until one source returns a valid
-result. It has a pool of clients managed by [poolboy](https://github.com/devinus/poolboy).
+result.
 
 ## Installation
 
@@ -21,31 +21,23 @@ def deps do
 end
 ```
 
-2. Ensure cep is started before your application (this is an otp app!):
-
-```elixir
-def application do
-  [applications: [:cep]]
-end
-```
-
 ## Usage
 
 To query for the address of any given Brazilian CEP code:
 
 ```elixir
-{:ok, address} = Cep.get_address("29375-000")
+{:ok, address} = Cep.Client.get_address("29375-000")
 IO.inspect address
 ```
 
-The default `Cep.get_address` will first try to access the official Brazilian
+The default `Cep.Client.get_address` will first try to access the official Brazilian
 Post Office web service to get the information. If the web service is down,
 timeout or doesn't have information about one specific CEP the next source will
 be automatically and transparently used. If none of the sources give good reply
 it will return a proper error, as in the following example:
 
 ```elixir
-{status, reason} = Cep.get_address("00000-000")
+{status, reason} = Cep.Client.get_address("00000-000")
 IO.inspect status
 IO.inspect reason
 ```
@@ -56,38 +48,29 @@ argument and sending as its value any combination of the element from
 
 ```elixir
 available_sources = Keyword.delete(Cep.sources, :correios)
-{:ok, address} = Cep.get_address("28016-811", sources: available_sources)
+{:ok, address} = Cep.Client.get_address("28016-811", sources: available_sources)
 ```
 
 To query just one specific source there is a sugar: just send the `source` with
 the desired source:
 
 ```elixir
-Cep.get_address("28016-811", source: :viacep)
+Cep.Client.get_address("28016-811", source: :viacep)
 ```
 
 ## Configuration
 
-### Pool size and overflow
-
-If you want to change the default pool size and/or overflow set add to our
-`Mix.Config` file:
-
-```elixir
-config :cep, pool: [size: 10, overflow: 15]
-```
-
 ### Sources
 
 You can change the default sources used when no `source` or `sources` keywords
-are sent to `Cep.get_address` by modifying your config file like this:
+are sent to `Cep.Client.get_address` by modifying your config file like this:
 
 ```elixir
 config :cep, sources: [:correios, :viacep]
 ```
 
 **IMPORTANT**: even if you add the default sources in config file, the `source`
-and `sources` keywords can override this configuration. 
+and `sources` keywords can override this configuration.
 
 ## Future
 
@@ -99,3 +82,5 @@ Future features that are planned:
   response time, for example)
 4. Use an Agent to store the default source list and allow it to be changed on
   the fly, as necessary
+5. Add rate limiting for each of the used sources (being server friendly is
+  always nice)

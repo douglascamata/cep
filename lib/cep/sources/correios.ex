@@ -1,6 +1,8 @@
 defmodule Cep.Sources.Correios do
   use Cep.Sources.Base
 
+  @behaviour Cep.Source
+
   def get_address(cep) do
     wsdl_url = "https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente"
     cep = String.replace(cep, "-", "")
@@ -39,13 +41,14 @@ defmodule Cep.Sources.Correios do
       "cidade" => "city",
       "complemento" => "complement",
       "complemento2" => "complement2",
-      "end" => "address",
+      "end" => "street",
       "uf" => "state"
     }
 
-    for {tag, translated_tag} <- result_fields, into: %{} do
+    result_map = for {tag, translated_tag} <- result_fields, into: %{} do
       {translated_tag, xpath(result, ~x"//return/#{tag}/text()") |> to_string}
     end
+    Cep.Address.new(result_map)
   end
 
   defp cep_not_found?(body) do

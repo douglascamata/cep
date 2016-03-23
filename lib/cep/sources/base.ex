@@ -1,7 +1,7 @@
 defmodule Cep.Sources.Base do
   defmacro __using__(_) do
     quote do
-      defp format_result_json(body_json) do
+      defp translate_keys(result) do
         key_map = %{
           "localidade" => "city",
           "cidade" => "city",
@@ -12,7 +12,7 @@ defmodule Cep.Sources.Base do
           "complemento" => "complement",
           "logradouro" => "street",
         }
-        for {key, value} <- body_json, into: %{} do
+        translated_map = for {key, value} <- result, into: %{} do
           {Map.get(key_map, key, key), value}
         end
       end

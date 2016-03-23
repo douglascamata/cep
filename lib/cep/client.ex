@@ -54,10 +54,18 @@ defmodule Cep.Client do
   end
 
   defp sources_clients_map do
-    [
+    sources = [
       correios: Cep.Sources.Correios,
       viacep: Cep.Sources.ViaCep,
       postmon: Cep.Sources.Postmon
     ]
+    if Application.get_env(:cep, :env) == :test do
+      sources
+        |> Keyword.put_new(:dummy, Cep.Sources.Test.Dummy)
+        |> Keyword.put_new(:alternative, Cep.Sources.Test.Alternative)
+        |> Keyword.put_new(:unavailable, Cep.Sources.Test.Unavailable)
+    else
+      sources
+    end
   end
 end

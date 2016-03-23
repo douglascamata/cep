@@ -1,18 +1,16 @@
 defmodule CepSourcesCorreiosTest do
-  use ExUnit.Case, async: false
-  use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
-  doctest Cep
+  use ExUnit.Case
 
-  setup_all do
-    ExVCR.Config.cassette_library_dir("fixture/vcr_cassettes")
-    :ok
+  @moduletag :live
+
+  test "should get CEP code addresses" do
+    {:ok, address} = Cep.Sources.Correios.get_address("29375-000")
+    assert address.city == "Venda Nova do Imigrante"
   end
 
-  test "should handle non-existent CEP code with Correios" do
-    use_cassette "non-existent CEP - Correios" do
-      {status, reason} = Cep.Sources.Correios.get_address("00000-000")
-      assert status == :not_found
-      assert reason == "CEP not found."
-    end
+  test "should handle non-existent CEP" do
+    {status, reason} = Cep.Sources.Correios.get_address("00000-000")
+    assert status == :not_found
+    assert reason == "CEP not found."
   end
 end

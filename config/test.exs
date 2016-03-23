@@ -1,3 +1,4 @@
 use Mix.Config
 
-config :cep, pool: [size: 1, overflow: 0]
+config :cep, sources: [:dummy]
+config :cep, env: :test

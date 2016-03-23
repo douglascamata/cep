@@ -37,7 +37,6 @@ defmodule Cep.Mixfile do
 
   def application do
     [
-      mod: {Cep, []},
       applications: [:logger, :httpoison]
     ]
   end
@@ -48,9 +47,7 @@ defmodule Cep.Mixfile do
       {:poison, "~> 2.0"},
       {:sweet_xml, "~> 0.6.1"},
       {:codepagex, "~> 0.1.2"},
-      {:poolboy, "~> 1.5"},
-      {:exvcr, "~> 0.7", only: :test},
-      {:mock, "~> 0.1.3", only: :test},
+      {:exconstructor, "~> 1.0"}
     ]
   end
 end
