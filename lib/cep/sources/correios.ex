@@ -9,7 +9,7 @@ defmodule Cep.Sources.Correios do
 
     case HTTPoison.post(wsdl_url, soap_template(cep)) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        {:ok, body |> Codepagex.to_string!(:iso_8859_1) |> format_result}
+        {:ok, body |> format_result}
       {:ok, %HTTPoison.Response{status_code: 500, body: body}} ->
         if cep_not_found?(body) do
           cep_not_found
@@ -46,14 +46,15 @@ defmodule Cep.Sources.Correios do
     }
 
     result_map = for {tag, translated_tag} <- result_fields, into: %{} do
-      {translated_tag, xpath(result, ~x"//return/#{tag}/text()") |> to_string}
+      element = xpath(result, ~x"//return/#{tag}/text()")
+      {translated_tag,  to_string(element)}
     end
     Cep.Address.new(result_map)
   end
 
   defp cep_not_found?(body) do
     import SweetXml
-    message = xpath(body, ~x"//faultstring/text()") |> to_string
-    message == "CEP NAO ENCONTRADO"
+    message = xpath(body, ~x"//faultstring/text()")
+    to_string(message) == "CEP NAO ENCONTRADO"
   end
 end

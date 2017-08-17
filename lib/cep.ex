@@ -1,3 +1,2 @@
 defmodule Cep do
-  
 end

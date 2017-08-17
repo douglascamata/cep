@@ -10,16 +10,16 @@ defmodule Cep.Client do
     if source do
       [source]
     else
-      Keyword.get(options, :sources, used_sources)
+      Keyword.get(options, :sources, used_sources())
     end
   end
 
   def used_sources do
-    Application.get_env(:cep, :sources, all_sources)
+    Application.get_env(:cep, :sources, all_sources())
   end
 
   def all_sources do
-    Keyword.keys(sources_clients_map)
+    Keyword.keys(sources_clients_map())
   end
 
   defp get_address_from_multiple_sources(_, [], [error: false, reason: _]) do
@@ -32,7 +32,7 @@ defmodule Cep.Client do
 
   defp get_address_from_multiple_sources(cep, sources, [error: _, reason: _]) do
     source = List.first(sources)
-    client = sources_clients_map[source]
+    client = sources_clients_map()[source]
     case client.get_address(cep) do
       {:ok, address} ->
         {:ok, address}
