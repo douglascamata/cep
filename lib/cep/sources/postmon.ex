@@ -7,9 +7,12 @@ defmodule Cep.Sources.Postmon do
     case HTTPoison.get("http://api.postmon.com.br/v1/cep/#{cep}") do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, result_map} = Poison.decode(body)
-        {:ok, result_map |> translate_keys |> Cep.Address.new}
+        address = result_map
+                  |> translate_keys
+                  |> Cep.Address.new
+        {:ok, address}
       {:ok, %HTTPoison.Response{status_code: 404}} ->
-        cep_not_found
+        cep_not_found()
       {:error, %HTTPoison.Error{reason: reason}} ->
         {:error, reason}
     end

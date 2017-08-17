@@ -9,10 +9,10 @@ defmodule Cep.Sources.Correios do
 
     case HTTPoison.post(wsdl_url, soap_template(cep)) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        {:ok, body |> format_result}
+        {:ok, format_result(body)}
       {:ok, %HTTPoison.Response{status_code: 500, body: body}} ->
         if cep_not_found?(body) do
-          cep_not_found
+          cep_not_found()
         end
       {:error, %HTTPoison.Error{reason: reason}} ->
         {:error, reason}
