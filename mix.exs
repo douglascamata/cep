@@ -6,14 +6,11 @@ defmodule Cep.Mixfile do
      name: "Cep",
      description: description(),
      package: package(),
-     version: "0.0.1",
-     elixir: "~> 1.2",
+     version: "0.0.2",
+     elixir: "~> 1.5",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps(),
-     preferred_cli_env: [
-      vcr: :test, "vcr.delete": :test, "vcr.check": :test, "vcr.show": :test,
-     ]
    ]
   end
 
