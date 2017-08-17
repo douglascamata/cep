@@ -4,13 +4,13 @@ defmodule Cep.Mixfile do
   def project do
     [app: :cep,
      name: "Cep",
-     description: description,
-     package: package,
+     description: description(),
+     package: package(),
      version: "0.0.1",
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps,
+     deps: deps(),
      preferred_cli_env: [
       vcr: :test, "vcr.delete": :test, "vcr.check": :test, "vcr.show": :test,
      ]
@@ -43,11 +43,11 @@ defmodule Cep.Mixfile do
 
   defp deps do
     [
-      {:httpoison, "~> 0.8.0"},
-      {:poison, "~> 2.0"},
-      {:sweet_xml, "~> 0.6.1"},
-      {:codepagex, "~> 0.1.2"},
-      {:exconstructor, "~> 1.0"}
+      {:httpoison, "~> 0.13.0"},
+      {:poison, "~> 3.1.0"},
+      {:sweet_xml, "~> 0.6.5"},
+      {:exconstructor, "~> 1.1.0"},
+      {:credo, "~> 0.8", only: [:dev, :test], runtime: false}
     ]
   end
 end
