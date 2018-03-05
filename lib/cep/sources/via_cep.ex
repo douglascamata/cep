@@ -7,11 +7,13 @@ defmodule Cep.Sources.ViaCep do
     case HTTPoison.get("http://viacep.com.br/ws/#{cep}/json") do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, result_map} = Poison.decode(body)
+
         if cep_not_found?(result_map) do
           cep_not_found()
         else
-          {:ok, result_map |> translate_keys |> Cep.Address.new}
+          {:ok, result_map |> translate_keys |> Cep.Address.new()}
         end
+
       {:error, %HTTPoison.Error{reason: reason}} ->
         {:error, reason}
     end

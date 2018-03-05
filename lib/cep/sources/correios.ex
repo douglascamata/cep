@@ -10,10 +10,12 @@ defmodule Cep.Sources.Correios do
     case HTTPoison.post(wsdl_url, soap_template(cep)) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, format_result(body)}
+
       {:ok, %HTTPoison.Response{status_code: 500, body: body}} ->
         if cep_not_found?(body) do
           cep_not_found()
         end
+
       {:error, %HTTPoison.Error{reason: reason}} ->
         {:error, reason}
     end
@@ -35,6 +37,7 @@ defmodule Cep.Sources.Correios do
 
   defp format_result(result) do
     import SweetXml
+
     result_fields = %{
       "bairro" => "neighborhood",
       "cep" => "cep",
@@ -45,10 +48,12 @@ defmodule Cep.Sources.Correios do
       "uf" => "state"
     }
 
-    result_map = for {tag, translated_tag} <- result_fields, into: %{} do
-      element = xpath(result, ~x"//return/#{tag}/text()")
-      {translated_tag,  to_string(element)}
-    end
+    result_map =
+      for {tag, translated_tag} <- result_fields, into: %{} do
+        element = xpath(result, ~x"//return/#{tag}/text()")
+        {translated_tag, to_string(element)}
+      end
+
     Cep.Address.new(result_map)
   end
 

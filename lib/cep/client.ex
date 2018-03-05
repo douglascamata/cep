@@ -1,5 +1,4 @@
 defmodule Cep.Client do
-
   def get_address(cep, options \\ []) do
     sources = process_sources(options)
     get_address_from_multiple_sources(cep, sources, error: false, reason: nil)
@@ -7,6 +6,7 @@ defmodule Cep.Client do
 
   defp process_sources(options) do
     source = Keyword.get(options, :source, nil)
+
     if source do
       [source]
     else
@@ -22,20 +22,22 @@ defmodule Cep.Client do
     Keyword.keys(sources_clients_map())
   end
 
-  defp get_address_from_multiple_sources(_, [], [error: false, reason: _]) do
+  defp get_address_from_multiple_sources(_, [], error: false, reason: _) do
     {:not_found, "CEP not found."}
   end
 
-  defp get_address_from_multiple_sources(_, [], [error: true, reason: reason]) do
+  defp get_address_from_multiple_sources(_, [], error: true, reason: reason) do
     {:error, reason}
   end
 
-  defp get_address_from_multiple_sources(cep, sources, [error: _, reason: _]) do
+  defp get_address_from_multiple_sources(cep, sources, error: _, reason: _) do
     source = List.first(sources)
     client = sources_clients_map()[source]
+
     case client.get_address(cep) do
       {:ok, address} ->
         {:ok, address}
+
       {:not_found, _} ->
         get_address_from_multiple_sources(
           cep,
@@ -43,6 +45,7 @@ defmodule Cep.Client do
           error: false,
           reason: nil
         )
+
       {:error, reason} ->
         get_address_from_multiple_sources(
           cep,
@@ -59,11 +62,12 @@ defmodule Cep.Client do
       viacep: Cep.Sources.ViaCep,
       postmon: Cep.Sources.Postmon
     ]
+
     if Application.get_env(:cep, :env) == :test do
       sources
-        |> Keyword.put_new(:dummy, Cep.Sources.Test.Dummy)
-        |> Keyword.put_new(:alternative, Cep.Sources.Test.Alternative)
-        |> Keyword.put_new(:unavailable, Cep.Sources.Test.Unavailable)
+      |> Keyword.put_new(:dummy, Cep.Sources.Test.Dummy)
+      |> Keyword.put_new(:alternative, Cep.Sources.Test.Alternative)
+      |> Keyword.put_new(:unavailable, Cep.Sources.Test.Unavailable)
     else
       sources
     end

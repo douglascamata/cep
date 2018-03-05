@@ -1,2 +1,2 @@
-ExUnit.configure exclude: [:live]
+ExUnit.configure(exclude: [:live])
 ExUnit.start()

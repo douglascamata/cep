@@ -10,11 +10,13 @@ defmodule Cep.Sources.Base do
           "nome" => "name",
           "bairro" => "neighborhood",
           "complemento" => "complement",
-          "logradouro" => "street",
+          "logradouro" => "street"
         }
-        translated_map = for {key, value} <- result, into: %{} do
-          {Map.get(key_map, key, key), value}
-        end
+
+        translated_map =
+          for {key, value} <- result, into: %{} do
+            {Map.get(key_map, key, key), value}
+          end
       end
 
       defp cep_not_found do
