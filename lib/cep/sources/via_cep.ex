@@ -1,5 +1,5 @@
 defmodule Cep.Sources.ViaCep do
-  use Cep.Sources.Base
+  import Cep.Sources.Base
 
   @behaviour Cep.Source
 
@@ -9,7 +9,7 @@ defmodule Cep.Sources.ViaCep do
         {:ok, result_map} = Poison.decode(body)
 
         if cep_not_found?(result_map) do
-          cep_not_found()
+          cep_not_found_error()
         else
           {:ok, result_map |> translate_keys |> Cep.Address.new()}
         end

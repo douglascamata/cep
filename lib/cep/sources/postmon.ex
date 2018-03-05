@@ -1,5 +1,5 @@
 defmodule Cep.Sources.Postmon do
-  use Cep.Sources.Base
+  import Cep.Sources.Base
 
   @behaviour Cep.Source
 
@@ -16,7 +16,7 @@ defmodule Cep.Sources.Postmon do
         {:ok, address}
 
       {:ok, %HTTPoison.Response{status_code: 404}} ->
-        cep_not_found()
+        cep_not_found_error()
 
       {:error, %HTTPoison.Error{reason: reason}} ->
         {:error, reason}

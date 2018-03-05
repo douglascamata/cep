@@ -1,19 +1,21 @@
 defmodule Cep.Sources.Correios do
-  use Cep.Sources.Base
+  import Cep.Sources.Base
+
+  alias Cep.Sources.Correios.{Sanitizer, RequestBuilder, ResultFormatter, Errors}
 
   @behaviour Cep.Source
+  @url "https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente"
 
   def get_address(cep) do
-    wsdl_url = "https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente"
-    cep = String.replace(cep, "-", "")
-
-    case HTTPoison.post(wsdl_url, soap_template(cep)) do
+    case HTTPoison.post(@url, request_body(cep)) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        {:ok, format_result(body)}
+        {:ok, ResultFormatter.format(body)}
 
       {:ok, %HTTPoison.Response{status_code: 500, body: body}} ->
-        if cep_not_found?(body) do
-          cep_not_found()
+        if Errors.cep_not_found?(body) do
+          cep_not_found_error()
+        else
+          unknown_error(body)
         end
 
       {:error, %HTTPoison.Error{reason: reason}} ->
@@ -21,45 +23,7 @@ defmodule Cep.Sources.Correios do
     end
   end
 
-  defp soap_template(cep) do
-    """
-    <?xml version="1.0" encoding="UTF-8"?>
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cli="http://cliente.bean.master.sigep.bsb.correios.com.br/">
-      <soapenv:Header />
-      <soapenv:Body>
-        <cli:consultaCEP>
-          <cep>#{cep}</cep>
-        </cli:consultaCEP>
-      </soapenv:Body>
-    </soapenv:Envelope>
-    """
-  end
-
-  defp format_result(result) do
-    import SweetXml
-
-    result_fields = %{
-      "bairro" => "neighborhood",
-      "cep" => "cep",
-      "cidade" => "city",
-      "complemento" => "complement",
-      "complemento2" => "complement2",
-      "end" => "street",
-      "uf" => "state"
-    }
-
-    result_map =
-      for {tag, translated_tag} <- result_fields, into: %{} do
-        element = xpath(result, ~x"//return/#{tag}/text()")
-        {translated_tag, to_string(element)}
-      end
-
-    Cep.Address.new(result_map)
-  end
-
-  defp cep_not_found?(body) do
-    import SweetXml
-    message = xpath(body, ~x"//faultstring/text()")
-    to_string(message) == "CEP NAO ENCONTRADO"
+  defp request_body(cep) do
+    cep |> Sanitizer.sanitize |> RequestBuilder.for_cep
   end
 end
