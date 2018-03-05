@@ -2,9 +2,10 @@ defmodule Cep.Sources.ViaCep do
   import Cep.Sources.Base
 
   @behaviour Cep.Source
+  @url "http://viacep.com.br/ws/"
 
   def get_address(cep) do
-    case HTTPoison.get("http://viacep.com.br/ws/#{cep}/json") do
+    case HTTPoison.get("#{@url}/#{cep}/json") do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, result_map} = Poison.decode(body)
 
