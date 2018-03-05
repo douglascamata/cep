@@ -24,6 +24,6 @@ defmodule Cep.Sources.Correios do
   end
 
   defp request_body(cep) do
-    cep |> Sanitizer.sanitize |> RequestBuilder.for_cep
+    cep |> Sanitizer.sanitize() |> RequestBuilder.for_cep()
   end
 end
