@@ -1,9 +1,9 @@
 sudo: false
 language: elixir
 elixir:
-  - 1.5.1
+  - 1.6.2
 otp_release:
-  - 18.2
+  - 20.2
 script:
   - mix test --include live
 notifications:
