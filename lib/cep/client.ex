@@ -1,4 +1,27 @@
 defmodule Cep.Client do
+  @moduledoc """
+    Provides a function `get_address/1` to query addreses of a given cep.
+  """
+
+  @doc """
+  Gets the address related to a given CEP.
+
+  ## Parameters
+
+    - cep: The CEP code
+
+  ## Return value
+
+    It returns a Cep.Address when the CEP was found.
+
+  ### Errors
+
+    It returns a tuple `{:not_found, "CEP not found."}` if the CEP couldn't be
+    found in any of the sources (probably an invalid CEP).
+
+    It returns a tuple `{:error, reason}` in case there was an unhandled error
+    coming from the source.
+  """
   def get_address(cep, options \\ []) do
     sources = process_sources(options)
     get_address_from_multiple_sources(cep, sources, error: false, reason: nil)
