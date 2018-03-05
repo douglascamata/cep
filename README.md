@@ -17,7 +17,7 @@ as:
 
 ```elixir
 def deps do
-  [{:cep, "~> 0.0.1"}]
+  [{:cep, "~> 0.0.2"}]
 end
 ```
 
