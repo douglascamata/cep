@@ -2,16 +2,17 @@ defmodule Cep.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :cep,
-     name: "Cep",
-     description: description(),
-     package: package(),
-     version: "0.0.2",
-     elixir: "~> 1.5",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps(),
-   ]
+    [
+      app: :cep,
+      name: "Cep",
+      description: description(),
+      package: package(),
+      version: "0.0.2",
+      elixir: "~> 1.5",
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      deps: deps()
+    ]
   end
 
   defp description do
@@ -45,7 +46,7 @@ defmodule Cep.Mixfile do
       {:poison, "~> 3.1.0"},
       {:sweet_xml, "~> 0.6.5"},
       {:exconstructor, "~> 1.1.0"},
-      {:credo, "~> 0.8", only: [:dev, :test], runtime: false}
+      {:credo, "~> 0.8.10", only: [:dev, :test], runtime: false}
     ]
   end
 end
