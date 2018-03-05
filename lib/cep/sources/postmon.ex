@@ -2,9 +2,10 @@ defmodule Cep.Sources.Postmon do
   import Cep.Sources.Base
 
   @behaviour Cep.Source
+  @url "http://api.postmon.com.br/v1/cep/"
 
   def get_address(cep) do
-    case HTTPoison.get("http://api.postmon.com.br/v1/cep/#{cep}") do
+    case HTTPoison.get("#{@url}/#{cep}") do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, result_map} = Poison.decode(body)
 
