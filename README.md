@@ -76,11 +76,5 @@ and `sources` keywords can override this configuration.
 
 Future features that are planned:
 
-1. Cache Cep queries using `ets`
-2. Add even more sources
-3. Add policies to order the source list based on different criteria (average
-  response time, for example)
-4. Use an Agent to store the default source list and allow it to be changed on
-  the fly, as necessary
-5. Add rate limiting for each of the used sources (being server friendly is
-  always nice)
+1. Use the circuit breaker pattern to avoid querying sources that return
+   unexpected errors too often.
