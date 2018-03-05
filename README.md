@@ -8,6 +8,14 @@ Has support for multiple source APIs (Correios, ViaCep, Postmon, etc).
 It can query one specific source or query until one source returns a valid
 result.
 
+## Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+  - [Sources](#sources)
+- [Future](#future)
+
 ## Installation
 
 It's is available as an [Hex](https://hex.pm) package and thus can be installed
@@ -78,3 +86,5 @@ Future features that are planned:
 
 1. Use the circuit breaker pattern to avoid querying sources that return
    unexpected errors too often.
+
+2. Use [Mox](https://github.com/plataformatec/mox) in the specs
