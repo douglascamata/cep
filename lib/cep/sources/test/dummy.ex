@@ -3,7 +3,7 @@ defmodule Cep.Sources.Test.Dummy do
     {:ok, %Cep.Address{city: "Venda Nova do Imigrante"}}
   end
 
-  def get_address("00000-000") do
+  def get_address(_) do
     {:not_found, "Cep not found."}
   end
 end
