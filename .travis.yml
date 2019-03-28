@@ -1,11 +1,13 @@
 sudo: false
 language: elixir
 elixir:
-  - 1.6.2
+  - 1.8.1
 otp_release:
-  - 20.2
+  - 21
 script:
   - mix test --include live
 notifications:
   recipients:
     - d.camata@gmail.com
+  on_success: change
+  on_failure: always
