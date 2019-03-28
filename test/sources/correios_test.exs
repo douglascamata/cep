@@ -10,6 +10,12 @@ defmodule CepSourcesCorreiosTest do
     end
 
     test "should handle non-existent CEP" do
+      {status, reason} = Cep.Sources.Correios.get_address("99999-999")
+      assert status == :not_found
+      assert reason == "CEP not found."
+    end
+
+    test "should handle invalid CEP as not found" do
       {status, reason} = Cep.Sources.Correios.get_address("00000-000")
       assert status == :not_found
       assert reason == "CEP not found."

@@ -11,13 +11,12 @@ defmodule Cep.Sources.Correios do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, ResultFormatter.format(body)}
 
-      {:ok, %HTTPoison.Response{status_code: 500, body: body}} ->
-        if Errors.cep_not_found?(body) do
-          cep_not_found_error()
-        else
-          unknown_error(body)
+      {:ok, %HTTPoison.Response{status_code: 500, headers: headers, body: body}} ->
+        cond do
+          Errors.cep_not_found?(body) -> cep_not_found_error()
+          Errors.invalid_cep?(body) -> cep_not_found_error()
+          true -> unknown_error(body)
         end
-
       {:error, %HTTPoison.Error{reason: reason}} ->
         {:error, reason}
     end
