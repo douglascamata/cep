@@ -8,7 +8,7 @@ defmodule Cep.Mixfile do
       description: description(),
       package: package(),
       version: "0.0.2",
-      elixir: "~> 1.5",
+      elixir: "~> 1.8",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       deps: deps()
@@ -42,9 +42,9 @@ defmodule Cep.Mixfile do
   defp deps do
     [
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:httpoison, "~> 0.13.0"},
-      {:poison, "~> 3.1.0"},
-      {:sweet_xml, "~> 0.6.5"},
+      {:httpoison, "~> 1.5.0"},
+      {:poison, "~> 4.0.1"},
+      {:sweet_xml, "~> 0.6.6"},
       {:exconstructor, "~> 1.1.0"},
       {:credo, "~> 0.8.10", only: [:dev, :test], runtime: false}
     ]
