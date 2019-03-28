@@ -3,7 +3,7 @@ language: elixir
 elixir:
   - 1.8.1
 otp_release:
-  - 21
+  - 21.3
 script:
   - mix test --include live
 notifications:
