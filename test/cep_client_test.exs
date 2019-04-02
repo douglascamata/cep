@@ -1,3 +1,9 @@
+defmodule CepSourceTest do
+  def get_address("00000-001") do
+    {:ok, %Cep.Address{city: "Piraque"}}
+  end
+end
+
 defmodule CepClientTest do
   use ExUnit.Case, async: true
 
@@ -31,6 +37,18 @@ defmodule CepClientTest do
       {error, reason} = Cep.Client.get_address("00000-000", sources: [:unavailable, :unavailable])
       assert error == :error
       assert reason == "Unavailable."
+    end
+
+    test "should accept a module as sources keyword" do
+      {:ok, address} = Cep.Client.get_address("00000-001", sources: [:dummy, CepSourceTest])
+
+      assert address.city == "Piraque"
+    end
+
+    test "should accept a module as source keyword" do
+      {:ok, address} = Cep.Client.get_address("00000-001", source: CepSourceTest)
+
+      assert address.city == "Piraque"
     end
   end
 

@@ -16,7 +16,9 @@ defmodule Cep.Sources.Postmon do
 
         {:ok, address}
 
-      {:ok, %HTTPoison.Response{status_code: 404}} ->
+      # For some reason Poison is returns 503 and it
+      # returns { :ok, %{ status_code: 503 } }
+      {:ok, %HTTPoison.Response{}} ->
         cep_not_found_error()
 
       {:error, %HTTPoison.Error{reason: reason}} ->

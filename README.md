@@ -80,6 +80,33 @@ config :cep, sources: [:correios, :viacep]
 **IMPORTANT**: even if you add the default sources in config file, the `source`
 and `sources` keywords can override this configuration.
 
+#### Add a custom source
+
+```elixir
+defmodule Cep.Sources.Custom.YourNewGreateSource do
+  import Cep.Sources.Base
+
+  @behaviour Cep.Source
+
+  def get_address(cep) do
+    # implement your source returning:
+    # { :ok, %Cep.Address{...} }
+    # or
+    # { :error, "reason" }
+    # or
+    # { :not_found, _ }
+  end
+end
+```
+
+and then pass it as the default sources in config file or as `sources` keywords.
+
+```elixir
+config :cep, sources: [:correios, Cep.Sources.Custom.YourNewGreateSource]
+# or
+client.get_address("00010-100", sources: [:correios, Cep.Sources.Custom.YourNewGreateSource])
+```
+
 ## Future
 
 Future features that are planned:

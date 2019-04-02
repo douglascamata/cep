@@ -55,7 +55,7 @@ defmodule Cep.Client do
 
   defp get_address_from_multiple_sources(cep, sources, error: _, reason: _) do
     source = List.first(sources)
-    client = sources_clients_map()[source]
+    client = sources_clients_map()[source] || source
 
     case client.get_address(cep) do
       {:ok, address} ->
