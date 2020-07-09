@@ -12,7 +12,7 @@ defmodule Cep.Sources.ViaCep do
         if cep_not_found?(result_map) do
           cep_not_found_error()
         else
-          {:ok, result_map |> translate_keys |> Cep.Address.new()}
+          {:ok, to_address(result_map)}
         end
 
       {:error, %HTTPoison.Error{reason: reason}} ->

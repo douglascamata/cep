@@ -2,12 +2,12 @@ defmodule Cep.Sources.Correios.ResultFormatter do
   import SweetXml
 
   @translation_map %{
-    "bairro" => "neighborhood",
-    "cep" => "cep",
-    "cidade" => "city",
-    "complemento" => "complement",
-    "end" => "street",
-    "uf" => "state"
+    "bairro" => :neighborhood,
+    "cep" => :cep,
+    "cidade" => :city,
+    "complemento" => :complement,
+    "end" => :street,
+    "uf" => :state
   }
 
   def format(result) do
@@ -17,6 +17,6 @@ defmodule Cep.Sources.Correios.ResultFormatter do
         {translated_tag, to_string(element)}
       end
 
-    Cep.Address.new(result_map)
+    struct(Cep.Address, result_map)
   end
 end

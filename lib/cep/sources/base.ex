@@ -1,21 +1,4 @@
 defmodule Cep.Sources.Base do
-  def translate_keys(result) do
-    key_map = %{
-      "localidade" => "city",
-      "cidade" => "city",
-      "estado" => "state",
-      "uf" => "state",
-      "nome" => "name",
-      "bairro" => "neighborhood",
-      "complemento" => "complement",
-      "logradouro" => "street"
-    }
-
-    for {key, value} <- result, into: %{} do
-      {Map.get(key_map, key, key), value}
-    end
-  end
-
   def to_address(result) do
     %Cep.Address{
       street: Map.get(result, "logradouro"),
