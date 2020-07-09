@@ -45,7 +45,6 @@ defmodule Cep.Mixfile do
       {:httpoison, "~> 1.5.0"},
       {:poison, "~> 4.0.1"},
       {:sweet_xml, "~> 0.6.6"},
-      {:exconstructor, "~> 1.1.0"},
       {:credo, "~> 0.8.10", only: [:dev, :test], runtime: false}
     ]
   end
