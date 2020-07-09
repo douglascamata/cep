@@ -15,6 +15,12 @@ defmodule Cep.Sources.ViaCep do
           {:ok, to_address(result_map)}
         end
 
+      {:ok, %HTTPoison.Response{status_code: code}} when code >= 400 and code <= 499 ->
+        cep_not_found_error()
+
+      {:ok, %HTTPoison.Response{body: body}} ->
+        unknown_error(body)
+
       {:error, %HTTPoison.Error{reason: reason}} ->
         {:error, reason}
     end
