@@ -18,9 +18,6 @@ defmodule Cep.Sources.Correios do
           true -> unknown_error(body)
         end
 
-      {:ok, %HTTPoison.Response{status_code: code}} when code >= 400 and code <= 499 ->
-        cep_not_found_error()
-
       {_result, unexpected_response} ->
         unknown_error(unexpected_response)
     end
